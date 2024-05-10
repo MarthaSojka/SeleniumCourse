@@ -53,14 +53,13 @@ public class Helper {
 
 
     // Gorsza metoda czekania na element
-    public static void waitForElementWorse(WebDriver driver, By locator, Integer milliseconds) {
+    public static void waitForElementLoaded(WebElement element, Integer milliseconds) {
         int attempts = 0;
 
         while (attempts < 3) {
             try {
-                WebElement element = driver.findElement(locator);
                 if (element.isDisplayed()) {
-                    System.out.println("Found element: " + locator.toString());
+                    System.out.println("Found element: " + element.toString());
                     break;
                 }
                 Thread.sleep(milliseconds);
@@ -80,6 +79,11 @@ public class Helper {
     }
 
 
+    public static WebElement waitForWebElement(WebDriver driver, WebElement element, int timeOutSec) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutSec));
 
+        return wait.ignoring(StaleElementReferenceException.class)
+                .until(ExpectedConditions.visibilityOf(element));
+    }
 
 }

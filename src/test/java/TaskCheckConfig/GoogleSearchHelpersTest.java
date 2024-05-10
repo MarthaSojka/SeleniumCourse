@@ -14,6 +14,7 @@ public class GoogleSearchHelpersTest {
     WebDriver driver;
 
     private static final By BUTTON_NARZEDZIA = By.xpath("//*[contains(text(), 'Narzędzia')]");
+    private static final By SEARCH = By.xpath("//*[@value='Szukaj w Google']");
 
     @Before
     public void setUp() {
@@ -35,6 +36,7 @@ public class GoogleSearchHelpersTest {
     @Test
     public void googleSearchHelpers_test() {
         Helper.fillInput(driver, By.name("q"), "Jarek");
+        Helper.clickButton(driver, SEARCH);
         Helper.waitForElement(driver, BUTTON_NARZEDZIA, 20);
         Assert.assertEquals("Title is incorrect", "Jarek - Szukaj w Google", driver.getTitle());
     }
